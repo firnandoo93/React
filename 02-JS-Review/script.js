@@ -66,7 +66,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false,
     pages: 658,
     translations: {
       spanish: "",
@@ -143,6 +143,7 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
+/*
 // Destructuring
 const book = getBook(2);
 book;
@@ -194,3 +195,96 @@ summary;
 const pagesRange = pages > 1000 ? "Over a thousand" : "Less than a thousand";
 pagesRange;
 console.log(`The book has ${pagesRange} pages`);
+
+// SHort-circuiting
+// && (Will return the second statement if the first statement is true)
+console.log(true && "Some string");
+// Will Return the first statement if it is false, even when the second value is true
+console.log(false && "Some string");
+
+// || (Will return the first statement if it is true)
+console.log(true || "Some string");
+// Will return the second statement if the first statement is false
+console.log(false || "Some string");
+
+const spanishTranslation = book.translations.spanish || "Not Translated";
+spanishTranslation;
+
+// ?? (Will return the second statement only if the first statement are null or undefined)
+const count = book.reviews.librarything.reviewsCount ?? "No data";
+count;
+
+
+function getTotalReviewCount(book) {
+  const goodreads = book.reviews.goodreads.reviewsCount;
+  // Chaining
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+
+const books = getBooks();
+
+// Map
+const titles = books.map((book) => book.title);
+titles;
+
+const esentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewCount: getTotalReviewCount(book),
+}));
+esentialData;
+
+// Filter
+const longsBook = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longsBook;
+
+const adventureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+adventureBooks;
+
+const allBookPages = books.reduce((sum, book) => sum + book.pages, 0);
+allBookPages;
+
+const arr = [1, 3, 7, 2, 9, 8];
+const sorted = arr.slice().sort();
+sorted;
+arr;
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+sortedByPages;
+
+// 1) Add new book object to an array
+const newBook = {
+  id: 6,
+  title: "That time i got reincarnated as a slime",
+  author: "Rimuru",
+};
+const addedBooks = [...books, newBook];
+addedBooks;
+
+// 2) Delete book object from an array
+const deletedBooks = addedBooks.filter((book) => book.id !== 1);
+deletedBooks;
+
+// 3) Update book object in the array
+const updatedBooks = deletedBooks.map((book) =>
+  book.id === 6 ? { ...book, author: "Shion" } : book
+);
+updatedBooks;
+*/
+
+// fetch("https://jsonplaceholder.typicode.com/todos")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await res.json();
+  console.log(data);
+}
+
+getTodos();
